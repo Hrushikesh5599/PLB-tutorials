@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define NAME_LENGTH 50
+typedef struct {
+char name[NAME_LENGTH];
+int id;
+float salary;
+} Employee;
+void write_employees_to_file(const char *filename, Employee employees[], int count) {
+FILE *file = fopen(filename, "wb");
+if (file == NULL) {
+perror("Error opening file");
+exit(EXIT_FAILURE);
+}
+fwrite(employees, sizeof(Employee), count, file);
+fclose(file);
+}
+void read_employees_from_file(const char *filename) {
+FILE *file = fopen(filename, "rb");
+if (file == NULL) {
+perror("Error opening file");
+exit(EXIT_FAILURE);
+}
+Employee employee;
+printf("Employee Records:\n");
+while (fread(&employee, sizeof(Employee), 1, file) == 1) {
+printf("Name: %s\n", employee.name);
+printf("ID: %d\n", employee.id);
+printf("Salary: %.2f\n", employee.salary);
+printf("\n");
+}
+fclose(file);
+}
+int main() {
+int num_employees;
+printf("Enter the number of employees: ");
+scanf("%d", &num_employees);
+if (num_employees <= 0) {
+printf("Invalid number of employees.\n");
+return 1;
+}
+Employee *employees = malloc(num_employees * sizeof(Employee));
+if (employees == NULL) {
+perror("Error allocating memory");
+return 1;
+}
+for (int i = 0; i < num_employees; i++) {
+printf("Enter details for employee %d:\n", i + 1);
+printf("Name: ");
+
+scanf(" %[^\n]s", employees[i].name); // Read string with spaces
+printf("ID: ");
+scanf("%d", &employees[i].id);
+printf("Salary: ");
+scanf("%f", &employees[i].salary);
+}
+write_employees_to_file("employees.dat", employees, num_employees);
+free(employees);
+read_employees_from_file("employees.dat");
+return 0;
+}
