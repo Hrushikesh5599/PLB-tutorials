@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX_STUDENTS 100
+#define NAME_LENGTH 50
+typedef struct {
+char name[NAME_LENGTH];
+int age;
+char grade;
+} Student;
+void input_students(Student students[], int count) {
+for (int i = 0; i < count; i++) {
+printf("Enter details for student %d:\n", i + 1);
+printf("Name: ");
+scanf(" %[^\n]s", students[i].name); // Read string with spaces
+printf("Age: ");
+scanf("%d", &students[i].age);
+printf("Grade: ");
+scanf(" %c", &students[i].grade); // Read single character
+}
+}
+void display_students(Student students[], int count) {
+printf("\nStudent Details:\n");
+for (int i = 0; i < count; i++) {
+printf("Student %d:\n", i + 1);
+printf("Name: %s\n", students[i].name);
+printf("Age: %d\n", students[i].age);
+printf("Grade: %c\n", students[i].grade);
+printf("\n");
+}
+}
+int main() {
+int num_students;
+Student students[MAX_STUDENTS];
+printf("Enter the number of students: ");
+scanf("%d", &num_students);
+if (num_students <= 0 || num_students > MAX_STUDENTS) {
+printf("Invalid number of students. Please enter a number between 1 and %d.\n", MAX_STUDENTS);
+return 1;
+}
+input_students(students, num_students);
+display_students(students, num_students);
+return 0;
+}
