@@ -1,0 +1,23 @@
+#include <stdio.h>
+int gcd_iterative(int a, int b) {
+while (b != 0) {
+int temp = b;
+b = a % b;
+a = temp;
+}
+return a;
+}
+int lcm_iterative(int a, int b) {
+return (a * b) / gcd_iterative(a, b);
+}
+int main() {
+int a, b;
+printf("Enter two numbers: ");
+scanf("%d %d", &a, &b);
+int gcd = gcd_iterative(a, b);
+int lcm = lcm_iterative(a, b);
+printf("Using Iterative Method:\n");
+printf("GCD of %d and %d is: %d\n", a, b, gcd);
+printf("LCM of %d and %d is: %d\n", a, b, lcm);
+return 0;
+}
