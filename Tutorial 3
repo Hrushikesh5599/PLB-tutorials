@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdbool.h>
+bool is_prime(int num) {
+if (num <= 1) return false;
+if (num <= 3) return true;
+if (num % 2 == 0 || num % 3 == 0) return false;
+for (int i = 5; i * i <= num; i += 6) {
+if (num % i == 0 || num % (i + 2) == 0) return false;
+}
+return true;
+}
+int main() {
+int n, count = 0, num = 2;
+printf("Enter the number of prime numbers to print: ");
+scanf("%d", &n);
+printf("First %d prime numbers are:\n", n);
+while (count < n) {
+if (is_prime(num)) {
+printf("%d ", num);
+count++;
+}
+num++;
+}
+printf("\n");
+return 0;
+}
