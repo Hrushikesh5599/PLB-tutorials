@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+typedef union {
+int intValue;
+float floatValue;
+char stringValue[100];
+} DataUnion;
+int main() {
+DataUnion data;
+int choice;
+printf("Select the type of data to store:\n");
+printf("1. Integer\n");
+printf("2. Floating-point number\n");
+printf("3. String\n");
+printf("Enter your choice (1/2/3): ");
+scanf("%d", &choice);
+while (getchar() != '\n');
+switch (choice) {
+case 1:
+printf("Enter an integer: ");
+scanf("%d", &data.intValue);
+break;
+case 2:
+printf("Enter a floating-point number: ");
+scanf("%f", &data.floatValue);
+break;
+case 3:
+printf("Enter a string: ");
+fgets(data.stringValue, sizeof(data.stringValue), stdin);
+data.stringValue[strcspn(data.stringValue, "\n")] = '\0';
+break;
+default:
+printf("Invalid choice.\n");
+return 1;
+}
+printf("\nStored data:\n");
+switch (choice) {
+case 1:
+printf("Integer: %d\n", data.intValue);
+break;
+case 2:
+printf("Floating-point number: %.2f\n", data.floatValue);
+break;
+case 3:
+printf("String: %s\n", data.stringValue);
+break;
+}
+return 0;
+}
